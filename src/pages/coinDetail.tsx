@@ -4,6 +4,7 @@ import { getCoinDetail } from "api";
 import Layout from "components/layout";
 import { useSettings } from "contexts/settingsContext";
 import { useEffect, useState, VFC } from "react";
+import { useErrorHandler } from "react-error-boundary";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { formatCurrency, formatDate } from "utils";
@@ -12,11 +13,15 @@ import { CoinDetail } from "../types";
 
 const CoinDetailPage: VFC = () => {
 	const { currency, locale } = useSettings();
+
 	const { id } = useParams<{ id: string }>();
+
 	const [coinDetail, setCoinDetail] = useState<CoinDetail>();
 
+	const handleError = useErrorHandler();
+
 	useEffect(() => {
-		getCoinDetail(id).then(setCoinDetail);
+		getCoinDetail(id).then(setCoinDetail).catch(handleError);
 	}, []);
 
 	const homepage = coinDetail?.links.homepage.join("");
