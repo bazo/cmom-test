@@ -1,15 +1,17 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Center, Flex, Heading, SkeletonText, Text } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Center, Flex, Heading, SkeletonText, Text } from "@chakra-ui/react";
 import { getCoinDetail } from "api";
 import Layout from "components/layout";
+import { useSettings } from "contexts/settingsContext";
 import { useEffect, useState, VFC } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { formatDate } from "utils";
+import { formatCurrency, formatDate } from "utils";
 
 import { CoinDetail } from "../types";
 
 const CoinDetailPage: VFC = () => {
+	const { currency, locale } = useSettings();
 	const { id } = useParams<{ id: string }>();
 	const [coinDetail, setCoinDetail] = useState<CoinDetail>();
 
@@ -21,17 +23,19 @@ const CoinDetailPage: VFC = () => {
 
 	return (
 		<Layout>
-			<Breadcrumb>
-				<BreadcrumbItem>
-					<BreadcrumbLink as="span">
-						<Link to={"/"}>Coins</Link>
-					</BreadcrumbLink>
-				</BreadcrumbItem>
+			<Flex alignItems="flex-start" width="100%">
+				<Breadcrumb>
+					<BreadcrumbItem>
+						<BreadcrumbLink as="span">
+							<Link to={"/"}>Coins</Link>
+						</BreadcrumbLink>
+					</BreadcrumbItem>
 
-				<BreadcrumbItem isCurrentPage>
-					<BreadcrumbLink href="#">{id}</BreadcrumbLink>
-				</BreadcrumbItem>
-			</Breadcrumb>
+					<BreadcrumbItem isCurrentPage>
+						<BreadcrumbLink href="#">{id}</BreadcrumbLink>
+					</BreadcrumbItem>
+				</Breadcrumb>
+			</Flex>
 			<SkeletonText startColor="pink.500" endColor="orange.500" noOfLines={50} isLoaded={coinDetail !== undefined}>
 				<Heading>
 					{coinDetail?.name} ({coinDetail?.symbol}){" "}
@@ -56,13 +60,15 @@ const CoinDetailPage: VFC = () => {
 					<Center>
 						<Text>
 							<strong>Market cap in Euro:</strong>&nbsp;
-							{coinDetail?.market_cap_rank}
+							{coinDetail ? formatCurrency(coinDetail.market_data.market_cap[currency.toLowerCase()], currency, locale) : ""}
 						</Text>
 					</Center>
 				</Flex>
-				<strong>Description</strong>
-				<br />
-				<div dangerouslySetInnerHTML={{ __html: coinDetail?.description["en"] || "" }}></div>
+				<Box mt="4">
+					<strong>Description</strong>
+					<br />
+					<div dangerouslySetInnerHTML={{ __html: coinDetail?.description[locale] || "" }}></div>
+				</Box>
 			</SkeletonText>
 		</Layout>
 	);

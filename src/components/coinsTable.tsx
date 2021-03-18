@@ -1,4 +1,4 @@
-import { ExternalLinkIcon, InfoIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Center, HStack, Image, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { VFC } from "react";
 import { Link } from "react-router-dom";
@@ -8,25 +8,24 @@ import { CoinMarketData } from "../types";
 
 interface CoinRowProps {
 	coin: CoinMarketData;
+	currency: string;
+	locale: string;
 	onInfoClick: () => void;
 }
 
-const CoinRow: VFC<CoinRowProps> = ({ coin, onInfoClick }) => {
+const CoinRow: VFC<CoinRowProps> = ({ coin, onInfoClick, currency, locale }) => {
 	return (
-		<Tr>
+		<Tr onClick={onInfoClick}>
 			<Td>
 				<Image boxSize="42px" objectFit="cover" src={coin.image} alt={coin.id} />
 			</Td>
 			<Td>{coin.name}</Td>
 			<Td>{coin.symbol}</Td>
-			<Td>{formatCurrency(coin.current_price)}</Td>
-			<Td>{formatCurrency(coin.high_24h)}</Td>
-			<Td>{formatCurrency(coin.low_24h)}</Td>
+			<Td>{formatCurrency(coin.current_price, currency, locale)}</Td>
+			<Td>{formatCurrency(coin.high_24h, currency, locale)}</Td>
+			<Td>{formatCurrency(coin.low_24h, currency, locale)}</Td>
 			<Td>
 				<HStack>
-					<Center w="20px" h="20px">
-						<InfoIcon onClick={onInfoClick} />
-					</Center>
 					<Center w="20px" h="20px">
 						<Link to={`/coins/${coin.id}`}>
 							<ExternalLinkIcon />
@@ -40,10 +39,12 @@ const CoinRow: VFC<CoinRowProps> = ({ coin, onInfoClick }) => {
 
 interface CoinsTableProps {
 	coins: CoinMarketData[];
+	currency: string;
+	locale: string;
 	onRowClick: (coin: CoinMarketData) => void;
 }
 
-const CoinsTable: VFC<CoinsTableProps> = ({ coins, onRowClick }) => {
+const CoinsTable: VFC<CoinsTableProps> = ({ coins, onRowClick, currency, locale }) => {
 	return (
 		<Table size="sm">
 			<Thead>
@@ -59,7 +60,7 @@ const CoinsTable: VFC<CoinsTableProps> = ({ coins, onRowClick }) => {
 			</Thead>
 			<Tbody>
 				{coins.map((coin) => {
-					return <CoinRow coin={coin} key={coin.id} onInfoClick={onRowClick.bind(null, coin)} />;
+					return <CoinRow coin={coin} currency={currency} locale={locale} onInfoClick={onRowClick.bind(null, coin)} key={coin.id} />;
 				})}
 			</Tbody>
 		</Table>

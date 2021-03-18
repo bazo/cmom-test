@@ -15,7 +15,7 @@ export function getCoinDetail(id: string): Promise<CoinDetail> {
 	return http.get(`/coins/${id}`, {
 		localization: false,
 		tickers: false,
-		market_data: false,
+		market_data: true,
 		community_data: false,
 		developer_data: false,
 		sparkline: false,

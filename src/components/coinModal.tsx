@@ -7,9 +7,11 @@ import CoinDetailTable from "./coinDetailTable";
 
 interface CoinModalProps extends Pick<ModalProps, "isOpen" | "onClose"> {
 	coin: CoinMarketData;
+	currency: string;
+	locale: string;
 }
 
-const CoinModal: VFC<CoinModalProps> = ({ coin, isOpen, onClose }) => {
+const CoinModal: VFC<CoinModalProps> = ({ coin, isOpen, onClose, currency, locale }) => {
 	const [coinDetail, setCoinDetail] = useState<CoinDetail>();
 
 	useEffect(() => {
@@ -23,7 +25,7 @@ const CoinModal: VFC<CoinModalProps> = ({ coin, isOpen, onClose }) => {
 				<ModalHeader>{coin.name}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<CoinDetailTable coinDetail={coinDetail} />
+					<CoinDetailTable coinDetail={coinDetail} currency={currency} locale={locale} />
 				</ModalBody>
 
 				<ModalFooter>

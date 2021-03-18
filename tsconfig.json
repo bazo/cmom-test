@@ -20,6 +20,7 @@
 			"api/*": ["./src/api/*"],
 			"app/*": ["./src/app/*"],
 			"components/*": ["./src/components/*"],
+			"contexts/*": ["./src/contexts/*"],
 			"pages/*": ["./src/pages/*"],
 			"utils": ["./src/utils"],
 			"utils/*": ["./src/utils/*"],

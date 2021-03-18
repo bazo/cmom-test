@@ -1,16 +1,19 @@
 import { Skeleton, Table, Tbody, Td, Th, Tr } from "@chakra-ui/react";
 import { VFC } from "react";
+import { Link } from "react-router-dom";
 import { formatCurrency, formatDate } from "utils";
 
 import { CoinDetail } from "../types";
 
 interface CoinDetailProps {
 	coinDetail: CoinDetail | undefined;
+	currency: string;
+	locale: string;
 }
 
 const skeletonItem = <Skeleton startColor="pink.500" endColor="orange.500" height="22px" />;
 
-const CoinDetailTable: VFC<CoinDetailProps> = ({ coinDetail }) => {
+const CoinDetailTable: VFC<CoinDetailProps> = ({ coinDetail, currency, locale }) => {
 	return (
 		<Table>
 			<Tbody>
@@ -28,11 +31,15 @@ const CoinDetailTable: VFC<CoinDetailProps> = ({ coinDetail }) => {
 				</Tr>
 				<Tr>
 					<Th>Description</Th>
-					<Td>{coinDetail ? coinDetail.description["en"].substring(0, 50) : skeletonItem}</Td>
+					<Td>
+						{coinDetail ? coinDetail.description[locale].substring(0, 50) : skeletonItem}
+						<br />
+						<Link to={`/coins/${coinDetail?.id}`}>View more</Link>
+					</Td>
 				</Tr>
 				<Tr>
 					<Th>Market cap in Euro</Th>
-					<Td>{coinDetail ? coinDetail.market_cap_rank : skeletonItem}</Td>
+					<Td>{coinDetail ? formatCurrency(coinDetail.market_data.market_cap[currency.toLowerCase()], currency, locale) : skeletonItem}</Td>
 				</Tr>
 				<Tr>
 					<Th>Homepage</Th>
