@@ -16,7 +16,13 @@
 		"jsx": "react-jsx",
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
-			"game/*": ["./src/game/*"]
+			"api": ["./src/api"],
+			"api/*": ["./src/api/*"],
+			"app/*": ["./src/app/*"],
+			"components/*": ["./src/components/*"],
+			"pages/*": ["./src/pages/*"],
+			"utils": ["./src/utils"],
+			"utils/*": ["./src/utils/*"],
 		}
 	},
 	"include": ["src"]
