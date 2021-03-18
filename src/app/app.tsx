@@ -3,10 +3,11 @@ import SettingsContext, { defaultSettings } from "contexts/settingsContext";
 import { FC } from "react";
 
 import Routes from "./routes";
+import theme from "./theme";
 
 const App: FC = () => {
 	return (
-		<ChakraProvider>
+		<ChakraProvider theme={theme}>
 			<SettingsContext.Provider value={defaultSettings}>
 				<Routes />
 			</SettingsContext.Provider>
