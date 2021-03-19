@@ -16,7 +16,7 @@ const CoinModal: VFC<CoinModalProps> = ({ coin, isOpen, onClose, currency, local
 
 	useEffect(() => {
 		getCoinDetail(coin.id).then(setCoinDetail);
-	}, []);
+	}, [coin]);
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
