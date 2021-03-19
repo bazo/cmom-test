@@ -1,7 +1,7 @@
 import { Skeleton, Table, Tbody, Td, Th, Tr } from "@chakra-ui/react";
+import { formatCurrency, formatDate } from "libs/formatters";
 import { VFC } from "react";
 import { Link } from "react-router-dom";
-import { formatCurrency, formatDate } from "utils";
 
 import { CoinDetail } from "../types";
 

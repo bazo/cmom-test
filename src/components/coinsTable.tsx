@@ -1,8 +1,8 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Center, HStack, Image, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { formatCurrency } from "libs/formatters";
 import { VFC } from "react";
 import { Link } from "react-router-dom";
-import { formatCurrency } from "utils";
 
 import { CoinMarketData } from "../types";
 

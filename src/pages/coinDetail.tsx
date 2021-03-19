@@ -3,11 +3,11 @@ import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Center, Flex, Heading,
 import { getCoinDetail } from "api";
 import Layout from "components/layout";
 import { useSettings } from "contexts/settingsContext";
+import { formatCurrency, formatDate } from "libs/formatters";
 import { useEffect, useState, VFC } from "react";
 import { useErrorHandler } from "react-error-boundary";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { formatCurrency, formatDate } from "utils";
 
 import { CoinDetail } from "../types";
 
