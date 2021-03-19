@@ -6,6 +6,8 @@ to run
 
 yarn install
 
+#copy .env.example to .env.local
+
 yarn start
 
 ```
